@@ -4,6 +4,7 @@ import Blog from "./pages/blog";
 import BlogDetail from "./pages/blogDetail";
 import AddModal from "./components/blog/addModal/index";
 import "./server";
+import EditModal, { editPost } from "./components/blog/editModal/index";
 
 const blogLoader = async () => {
   const url = "/api/blogs";
@@ -35,11 +36,8 @@ const router = createBrowserRouter([
         children: [
           {
             path: "edit",
-            element: <p> edit </p>,
-          },
-          {
-            path: "delete",
-            element: <p> delete </p>,
+            element: <EditModal />,
+            action: editPost,
           },
         ],
       },

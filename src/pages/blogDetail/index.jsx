@@ -13,7 +13,6 @@ export default function Index() {
 
   useEffect(() => {
     const url = `/api/blogs/${blogId}`;
-    console.log("Fetching blog from:", url);
 
     const postDetails = async () => {
       const response = await fetch(url);
@@ -25,7 +24,7 @@ export default function Index() {
     postDetails();
   }, [blogId]);
 
-  console.log(post, "posts");
+  // console.log(post, "posts");
 
   const deleteUser = async (id) => {
     try {

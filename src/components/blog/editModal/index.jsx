@@ -1,27 +1,10 @@
 import "./index.css";
 import { useEffect, useState } from "react";
-import { Form, useParams } from "react-router-dom";
-
-const handleEditPost = async (e, blogId) => {
-  e.preventDefault();
-  let formData = new FormData(e.target);
-  let data = {
-    title: formData.get("title"),
-    summary: formData.get("summary"),
-    content: formData.get("content"),
-    tagcolor: formData.get("tagcolor"),
-    tag: formData.get("tag"),
-    imageUrl:
-      "https://cdn.europosters.eu/image/750/posters/cars-characters-i33475.jpg",
-    authorImg: "https://i.pravatar.cc/40?img=1",
-    id: blogId,
-  };
-  await editPost(data);
-};
+import { Form, useParams, useNavigate } from "react-router-dom";
 
 export const editPost = async (data) => {
   try {
-    const url = `api/blogs/${data.id}`;
+    const url = `/api/blogs/${data.id}`;
     const response = await fetch(url, {
       method: "PATCH",
       headers: {
@@ -32,7 +15,7 @@ export const editPost = async (data) => {
 
     const res = await response.json();
     console.log("Successfully updated:", res);
-    // window.location.href = "/blog";
+
     return res;
   } catch (error) {
     console.log(error);
@@ -43,17 +26,22 @@ export default function Index() {
   const { blogId } = useParams();
 
   const [post, setDetail] = useState({});
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const url = `api/blogs/${blogId}`;
+    const url = `/api/blogs/${blogId}`;
 
     const postDetails = async () => {
       const response = await fetch(url);
-      const data = await response.json();
-      setDetail(data);
-      return data;
+      const { blog } = await response.json();
+      console.log("edit page detail", blog);
+      setDetail(blog);
+      return blog;
     };
     postDetails();
   }, [blogId]);
+
+  console.log("edit page post", post);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -62,6 +50,26 @@ export default function Index() {
       [name]: value,
     }));
   };
+
+  const handleEditPost = async (e, blogId) => {
+    e.preventDefault();
+    let formData = new FormData(e.target);
+    let data = {
+      title: formData.get("title"),
+      summary: formData.get("summary"),
+      content: formData.get("content"),
+      tagcolor: formData.get("tagcolor"),
+      tag: formData.get("tag"),
+      imageUrl:
+        "https://cdn.europosters.eu/image/750/posters/cars-characters-i33475.jpg",
+      authorImg: "https://i.pravatar.cc/40?img=1",
+      id: blogId,
+    };
+    await editPost(data);
+
+    navigate("/blog");
+  };
+
   return (
     <>
       <div className="wrapper">
@@ -129,7 +137,7 @@ export default function Index() {
               <textarea
                 placeholder="Post Content"
                 name="content"
-                rows={15}
+                rows={8}
                 value={post.content}
                 onChange={handleInputChange}
               ></textarea>
