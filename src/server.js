@@ -2,10 +2,10 @@ import { createServer, Model } from "miragejs";
 
 createServer({
   models: {
-    user: Model,
+    blog: Model,
   },
   seeds(server) {
-    server.create("user", {
+    server.create("blog", {
       id: 1,
       title: "Tesla New Cyberbeast!",
       summary:
@@ -18,7 +18,7 @@ createServer({
         "https://cdn.europosters.eu/image/750/posters/cars-characters-i33475.jpg",
       authorImg: "https://i.pravatar.cc/40?img=2",
     });
-    server.create("user", {
+    server.create("blog", {
       id: 5,
       title: "Food Up!",
       summary:
@@ -31,7 +31,7 @@ createServer({
         "https://cdn.europosters.eu/image/750/posters/cars-characters-i33475.jpg",
       authorImg: "https://i.pravatar.cc/40?img=2",
     });
-    server.create("user", {
+    server.create("blog", {
       id: 6,
       title: "Tesla New Cyberbeast!",
       summary:
@@ -48,28 +48,34 @@ createServer({
 
   routes() {
     this.namespace = "api";
-    this.get("/users", (schema, request) => {
-      return schema.users.all();
+    this.get("/blogs", (schema, request) => {
+      return schema.blogs.all();
     });
 
-    this.post("/users", (schema, request) => {
+    this.get("/blogs/:id", (schema, request) => {
+      let id = request.params.id;
+
+      return schema.blogs.find(id);
+    });
+
+    this.post("/blogs", (schema, request) => {
       let attrs = JSON.parse(request.requestBody);
-      let newUser = schema.users.create(attrs);
-      return newUser;
+      let newBlog = schema.blogs.create(attrs);
+      return newBlog;
     });
 
-    this.patch("/users/:id", (schema, request) => {
+    this.patch("/blogs/:id", (schema, request) => {
       let newAttrs = JSON.parse(request.requestBody);
       let id = request.params.id;
-      let user = schema.users.find(id);
+      let blog = schema.blogs.find(id);
 
-      return user.update(newAttrs);
+      return blog.update(newAttrs);
     });
 
-    this.delete("/users/:id", (schema, request) => {
+    this.delete("/blogs/:id", (schema, request) => {
       let id = request.params.id;
 
-      return schema.users.find(id).destroy();
+      return schema.blogs.find(id).destroy();
     });
   },
 });

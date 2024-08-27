@@ -1,11 +1,11 @@
 import "./index.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Link, Outlet } from "react-router-dom";
 
-import { Link, Outlet } from "react-router-dom";
 export default function Index() {
-  const { users } = useLoaderData();
+  const { blogs } = useLoaderData();
+  console.log(blogs);
 
   return (
     <>
@@ -24,7 +24,7 @@ export default function Index() {
       </Link>
 
       <div className="post-container">
-        {users.map((post) => (
+        {blogs.map((post) => (
           <Link to={`/blog/${post.id}`} key={post.id}>
             <div className="card">
               <img className="post-img" src={post.imageUrl} alt="" />

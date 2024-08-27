@@ -18,7 +18,7 @@ export default function Index() {
       authorImg: "https://i.pravatar.cc/40?img=1",
     };
 
-    await fetch("/api/users", {
+    await fetch("/api/blogs", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

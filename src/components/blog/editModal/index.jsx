@@ -21,7 +21,7 @@ const handleEditPost = async (e, blogId) => {
 
 export const editPost = async (data) => {
   try {
-    const url = `api/users/${data.id}`;
+    const url = `api/blogs/${data.id}`;
     const response = await fetch(url, {
       method: "PATCH",
       headers: {
@@ -32,7 +32,7 @@ export const editPost = async (data) => {
 
     const res = await response.json();
     console.log("Successfully updated:", res);
-    window.location.href = "/blog";
+    // window.location.href = "/blog";
     return res;
   } catch (error) {
     console.log(error);
@@ -44,7 +44,7 @@ export default function Index() {
 
   const [post, setDetail] = useState({});
   useEffect(() => {
-    const url = `http://localhost:3000/posts/${blogId}`;
+    const url = `api/blogs/${blogId}`;
 
     const postDetails = async () => {
       const response = await fetch(url);
