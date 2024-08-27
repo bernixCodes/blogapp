@@ -9,17 +9,23 @@ export default function Index() {
   const navigation = useNavigate();
 
   const [post, setDetail] = useState({});
+
+
   useEffect(() => {
-    const url = `api/users/${blogId}`;
+    const url = `/api/blogs/${blogId}`;
+    console.log("Fetching blog from:", url);
 
     const postDetails = async () => {
       const response = await fetch(url);
-      const data = await response.json();
-      setDetail(data);
-      return data;
+      const { blog } = await response.json();
+
+      setDetail(blog);
+      return blog;
     };
     postDetails();
   }, [blogId]);
+
+  console.log(post, "posts");
   return (
     <>
       <Outlet />

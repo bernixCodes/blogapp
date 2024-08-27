@@ -25,7 +25,7 @@ export default function Index() {
 
       <div className="post-container">
         {blogs.map((post) => (
-          <Link to={`/blog/${post.id}`} key={post.id}>
+          <Link to={`${post.id}`} key={post.id}>
             <div className="card">
               <img className="post-img" src={post.imageUrl} alt="" />
               <div className="card-body">
