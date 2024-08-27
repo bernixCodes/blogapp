@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: 15% auto;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .grid-container {
+      grid-template-columns: 19% auto;
+    }
+  }
+  
+  @media screen and (min-width: 1280px) {
+    .grid-container {
+      grid-template-columns: 15% auto;
+    }
+  }
+  
