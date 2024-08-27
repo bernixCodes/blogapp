@@ -7,9 +7,9 @@ export default function Index() {
   // console.log(blogId);
 
   const navigation = useNavigate();
+  const navigate = useNavigate();
 
   const [post, setDetail] = useState({});
-
 
   useEffect(() => {
     const url = `/api/blogs/${blogId}`;
@@ -26,6 +26,14 @@ export default function Index() {
   }, [blogId]);
 
   console.log(post, "posts");
+
+  const deleteUser = async (id) => {
+    try {
+      await fetch(`/api/blogs/${id}`, { method: "DELETE" });
+      navigate("/blog");
+    } catch (error) {}
+  };
+
   return (
     <>
       <Outlet />
@@ -44,9 +52,7 @@ export default function Index() {
           <Link to={"edit"}>
             <button>Edit</button>
           </Link>
-          <Link to={"delete"}>
-            <button>Delete</button>
-          </Link>
+          <button onClick={() => deleteUser(post.id)}>Delete</button>
         </div>
       </div>
       <div className="detail-container">
